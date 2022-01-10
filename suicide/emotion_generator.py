@@ -11,61 +11,7 @@ from nltk.corpus import wordnet
 import nltk
 import networkx as nx
 nlp = spacy.load('en_core_web_lg')
-nlp.max_length = 50000000
-
-data_30 = []
-with open("train_30.jsonl") as f:
-    for line in f:
-        data_30.append(json.loads(line))
-
-label = []
-for i in range(len(data_30)):
-    label.append(data_30[i]['label'])
-
-a = []
-for i in range(len(data_30)):
-    a.append(data_30[i]['tweets'])
-
-b = []
-for i in range(len(a)):
-    for j in range(len(a[i])):
-        b.append(a[i][j]['text'])
-
-length = []
-for i in range(len(a)):
-    length.append(len(a[i]))
-
-inputt = iter(b)
-text = [list(islice(inputt, elem)) for elem in length]
-
-c = []
-for i in range(len(data_30)):
-    c.append(data_30[i]['tweets'])
-
-d = []
-for i in range(len(c)):
-    for j in range(len(c[i])):
-        d.append(c[i][j]['created_at'])
-
-length2 = []
-for i in range(len(c)):
-    length2.append(len(c[i]))
-
-inputt2 = iter(d)
-date = [list(islice(inputt2, elem)) for elem in length2]
-
-date_attempt = []
-for i in range(len(data_30)):
-    date_attempt.append(data_30[i]['date_of_attempt'])
-
-user = []
-for i in range(len(data_30)):
-    user.append(data_30[i]['id'])
-
-user2 = [item for item, count in zip(user, length) for i in range(count)]
-date_attempt2 = [item for item, count in zip(date_attempt, length) for i in range(count)]
-label2 = [item for item, count in zip(label, length) for i in range(count)]
-df_text = pd.DataFrame(np.columns_stack([user2, b, d, date_attempt2, label2]),columns = ['sender','email','date','time','label'])
+nlp.max_length = 5000
 
 def read_json_file(fn):
     f = open(fn, 'r')
@@ -333,4 +279,4 @@ for d in enron_data:
 email_sent_data_df = pandas.DataFrame(email_sent_data)
 email_sent_data_df.fillna(0, inplace=True)
 
-email_sent_data_df.to_csv('lklk3.csv', index=False)
+email_sent_data_df.to_csv('emotions.csv', index=False)
